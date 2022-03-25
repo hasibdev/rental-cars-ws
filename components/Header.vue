@@ -21,7 +21,7 @@
 }
 </i18n>
 <template>
-   <header class="sticky-top" style="background-color: white; border-bottom: 1px solid #f9f9f9">
+   <header style="background-color: white; border-bottom: 1px solid #f9f9f9">
       <nav class="navbar navbar-expand-lg navbar-light">
          <div class="container">
             <NuxtLink class="logo" :to="localePath('/')"><img src="~/assets/images/logo.svg" alt="logo" /></NuxtLink>

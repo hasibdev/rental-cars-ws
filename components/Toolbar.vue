@@ -24,7 +24,7 @@ export default {
 <style lang="scss" scoped>
 #Toolbar {
    background-color: #191919;
-   height: 185px;
+   height: 160px;
    // color: white;
    .container,
    .row {

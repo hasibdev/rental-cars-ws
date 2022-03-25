@@ -4,7 +4,7 @@
          <p class="base-color mb-1">Pick-up date</p>
 
          <div class="calender-wrapper">
-            <DateRangePicker v-model="dateRange" :dateRange="dateRange" :autoApply="true" :append-to-body="true">
+            <DateRangePicker v-model="dateRange" :dateRange="dateRange" :autoApply="true" :append-to-body="true" @toggle="toggle">
                <!-- Hiding left side range -->
                <template #ranges>
                   <span class="d-none"></span>
@@ -21,7 +21,7 @@
          <p class="base-color mb-1">Return date</p>
 
          <div class="calender-wrapper">
-            <DateRangePicker v-model="dateRange" :dateRange="dateRange" :autoApply="true" :append-to-body="true">
+            <DateRangePicker v-model="dateRange" :dateRange="dateRange" :autoApply="true" :append-to-body="true" @toggle="toggle">
                <!-- Hiding left side range -->
                <template #ranges>
                   <span class="d-none"></span>
@@ -63,7 +63,23 @@ export default {
    },
    methods: {
       toggle(value) {
-         this.$emit("toggle", value)
+         if (value) {
+            const toolbarEl = document.querySelector('#Toolbar')
+            const top = toolbarEl.offsetTop + toolbarEl.scrollHeight
+            console.log(top)
+
+            this.$nextTick(() => {
+               const rangePickerEl = document.querySelector('.daterangepicker')
+               rangePickerEl.style.top = `${top}px`
+            })
+
+
+            window.scroll({
+               top: 70,
+               left: 0,
+               behavior: 'smooth'
+            })
+         }
       },
    },
 }
@@ -95,6 +111,7 @@ $base-color: #ff5f00;
    left: 0 !important;
    transform: translate(0, 0) !important;
    padding: 30px 0;
+   margin-top: 0;
    .calendars-container {
       width: 100%;
    }

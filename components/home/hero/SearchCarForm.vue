@@ -37,14 +37,6 @@
          </b-select>
       </div>
 
-      <!-- Range Calender -->
-      <div class="mt-3">
-         <label class="form__label">Calender</label>
-         <div>
-            <RangeCalender />
-         </div>
-      </div>
-
       <!-- Pick date -->
       <div class="mt-3">
          <label class="form__label">{{ $t('pick-Date') }}</label>
@@ -146,11 +138,10 @@ import Datepicker from 'vuejs-datepicker'
 import { en, de } from 'vuejs-datepicker/dist/locale'
 import ModalBooking from '../../modals/ModalBooking.vue'
 import ModelConfirm from '../../modals/ModelConfirm.vue'
-import RangeCalender from '@/components/RangeCalender.vue'
 
 export default {
    namd: 'SearchCarForm',
-   components: { Datepicker, ModalBooking, ModelConfirm, RangeCalender },
+   components: { Datepicker, ModalBooking, ModelConfirm, },
    data() {
       return {
          en,
