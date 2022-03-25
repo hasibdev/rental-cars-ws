@@ -23,6 +23,8 @@ export default {
 
 <style lang="scss" scoped>
 #Toolbar {
+   position: relative;
+   z-index: 100;
    background-color: #191919;
    height: 160px;
    // color: white;

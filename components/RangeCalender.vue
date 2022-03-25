@@ -63,8 +63,13 @@ export default {
    },
    methods: {
       toggle(value) {
+         const overlayEl = document.querySelector('#page-overlay')
+
          if (value) {
             const toolbarEl = document.querySelector('#Toolbar')
+
+            overlayEl.classList.add('show')
+
             const top = toolbarEl.offsetTop + toolbarEl.scrollHeight
             console.log(top)
 
@@ -79,6 +84,8 @@ export default {
                left: 0,
                behavior: 'smooth'
             })
+         } else {
+            overlayEl.classList.remove('show')
          }
       },
    },
