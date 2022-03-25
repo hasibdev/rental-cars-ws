@@ -1,17 +1,17 @@
 <template>
    <div class="row">
       <div class="col-6">
-         <p class="base-color">Pick-up date!</p>
+         <p class="base-color">Pick-up date</p>
 
          <div>
-            <DateRangePicker :dateRange="dateRange" />
+            <DateRangePicker :dateRange="dateRange" :autoApply="true" />
          </div>
       </div>
       <div class="col-6">
          <p class="base-color">Return date</p>
 
          <div>
-            <DateRangePicker :dateRange="dateRange" />
+            <DateRangePicker :dateRange="dateRange" :autoApply="true" />
          </div>
 
       </div>
