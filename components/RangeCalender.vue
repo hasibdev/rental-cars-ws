@@ -1,23 +1,35 @@
 <template>
    <div class="row">
       <div class="col-6">
-         <p class="base-color">Pick-up date</p>
+         <p class="base-color mb-1">Pick-up date</p>
 
          <div class="calender-wrapper">
-            <DateRangePicker :dateRange="dateRange" :autoApply="true" :append-to-body="true">
+            <DateRangePicker v-model="dateRange" :dateRange="dateRange" :autoApply="true" :append-to-body="true">
+               <!-- Hiding left side range -->
                <template #ranges>
                   <span class="d-none"></span>
+               </template>
+
+               <!-- Input -->
+               <template #input>
+                  {{ $moment(dateRange.startDate).format('MMM DD') }}
                </template>
             </DateRangePicker>
          </div>
       </div>
       <div class="col-6">
-         <p class="base-color">Return date</p>
+         <p class="base-color mb-1">Return date</p>
 
          <div class="calender-wrapper">
-            <DateRangePicker :dateRange="dateRange" :autoApply="true" :append-to-body="true">
+            <DateRangePicker v-model="dateRange" :dateRange="dateRange" :autoApply="true" :append-to-body="true">
+               <!-- Hiding left side range -->
                <template #ranges>
                   <span class="d-none"></span>
+               </template>
+
+               <!-- Input -->
+               <template #input>
+                  {{ $moment(dateRange.endDate).format('MMM DD') }}
                </template>
             </DateRangePicker>
          </div>
@@ -39,8 +51,8 @@ export default {
    data() {
       return {
          dateRange: {
-            startDate: null,
-            endDate: null
+            startDate: new Date(),
+            endDate: new Date()
          },
          dateLocalData: {
             direction: "ltr",
@@ -58,8 +70,24 @@ export default {
 </script>
 
 <style lang="scss">
+$base-color: #ff5f00;
 .base-color {
-   color: #ff5f00;
+   color: $base-color;
+}
+
+.calender-wrapper {
+   .vue-daterange-picker {
+      .form-control.reportrange-text {
+         background-color: transparent;
+         border: 0;
+         outline: 0;
+         color: #fff;
+         font-size: 22px;
+         padding-left: 0;
+         border-bottom: 2px solid #fff;
+         border-radius: 0;
+      }
+   }
 }
 
 .daterangepicker {
@@ -100,6 +128,35 @@ export default {
                   position: relative;
                   text-align: center;
                   vertical-align: middle;
+                  &.start-date::after {
+                     content: '';
+                     position: absolute;
+                     border-top: 0.625rem solid transparent;
+                     border-bottom: 0.625rem solid transparent;
+
+                     border-left: 0.625rem solid #191919;
+
+                     left: 0;
+                     top: 50%;
+                     transform: translateY(-50%);
+                  }
+                  &.end-date::after {
+                     content: '';
+                     position: absolute;
+                     border-top: 0.625rem solid transparent;
+                     border-bottom: 0.625rem solid transparent;
+
+                     border-right: 0.625rem solid #191919;
+
+                     right: 0;
+                     top: 50%;
+                     transform: translateY(-50%);
+                  }
+                  &.in-range {
+                     background-color: $base-color;
+                     border-color: $base-color;
+                     color: #fff;
+                  }
                }
             }
          }
@@ -110,5 +167,17 @@ export default {
    //    max-width: initial;
    //    width: initial;
    // }
+}
+
+// Active color
+.daterangepicker td.active,
+.daterangepicker td.active:hover {
+   background-color: $base-color;
+   border-color: $base-color;
+   color: #fff;
+}
+
+.daterangepicker td.end-date {
+   border-radius: 0;
 }
 </style>
