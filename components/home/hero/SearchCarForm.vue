@@ -42,7 +42,7 @@
          <label class="form__label">{{ $t('pick-Date') }}</label>
          <div class="row">
             <div class="col-6 date-column">
-               <DateRangePicker :date-range="dateRange" opens="right" :auto-apply="true" :ranges="false">
+               <DateRangePicker :date-range="dateRange" opens="right" :auto-apply="true" :ranges="false" @toggle="toggleCalender">
                   <template #input>
                      {{ $moment(dateRange.startDate).format('MMM DD') }}
                   </template>
@@ -60,7 +60,7 @@
          <label class="form__label">{{ $t('return-Date') }}</label>
          <div class="row">
             <div class="col-6 date-column">
-               <DateRangePicker :date-range="dateRange" opens="right" :auto-apply="true" :ranges="false">
+               <DateRangePicker :date-range="dateRange" opens="right" :auto-apply="true" :ranges="false" @toggle="toggleCalender">
                   <template #input>
                      {{ $moment(dateRange.endDate).format('MMM DD') }}
                   </template>
@@ -228,6 +228,18 @@ export default {
       hideConfirmModal() {
          this.isSubmitedBookingForm = false
       },
+      toggleCalender(val) {
+         if (val) {
+            document.getElementById('page-overlay').classList.add('show')
+            window.scroll({
+               left: 0,
+               top: 100,
+               behavior: 'smooth'
+            })
+         } else {
+            document.getElementById('page-overlay').classList.remove('show')
+         }
+      }
    },
 }
 </script>
@@ -238,6 +250,18 @@ export default {
       width: 100%;
       .reportrange-text {
          width: 100%;
+         border-color: var(--color-light-grey-2);
+         font-weight: 400;
+         border-radius: 4px;
+         outline: none;
+         font-size: 1rem;
+         transition: border-width 0.2s linear;
+         height: 44px;
+         display: flex;
+         align-items: center;
+         position: relative;
+         line-height: 1.2;
+         padding-left: 37px;
       }
 
       .drp-calendar.col.left {
