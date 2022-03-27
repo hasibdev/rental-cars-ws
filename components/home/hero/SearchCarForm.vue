@@ -41,40 +41,16 @@
       <div class="mt-3">
          <label class="form__label">{{ $t('pick-Date') }}</label>
          <div class="row">
-            <div class="col-6">
-               <div class="date__picker-innner">
-                  <span class="date__picker-innner-icon">
-                     <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 9H4V11H6V9ZM10 9H8V11H10V9ZM14 9H12V11H14V9ZM16 2H15V0H13V2H5V0H3V2H2C0.89 2 0.00999999 2.9 0.00999999 4L0 18C0 19.1 0.89 20 2 20H16C17.1 20 18 19.1 18 18V4C18 2.9 17.1 2 16 2ZM16 18H2V7H16V18Z" />
-                     </svg>
-                  </span>
-                  <Datepicker v-model="requestForm.pickupDate" input-class="datepicker-input" typeable format="dd/MM/yyyy" :placeholder="$t('pick-Date')" :language="langLocale" @selected="highlightTo" />
-               </div>
+            <div class="col-6 date-column">
+               <DateRangePicker :date-range="dateRange" opens="right" :auto-apply="true" :ranges="false">
+                  <template #input>
+                     {{ $moment(dateRange.startDate).format('MMM DD') }}
+                  </template>
+               </DateRangePicker>
+
             </div>
             <div class="col-6">
-               <b-select v-model="requestForm.pickupTime" :placeholder="$t('time')" :options="[
-              '8:30',
-              '9:00',
-              '9:30',
-              '10:00',
-              '10:30',
-              '11:00',
-              '11:30',
-              '12:00',
-              '12:30',
-              '13:00',
-              '13:30',
-              '14:00',
-              '14:30',
-              '15:00',
-              '15:30',
-              '16:00',
-              '16:30',
-              '17:00',
-              '17:30',
-              '18:00',
-              '18:30',
-            ]" outline />
+               <b-select v-model="requestForm.pickupTime" :placeholder="$t('time')" :options="timeOptions" outline />
             </div>
          </div>
       </div>
@@ -83,40 +59,16 @@
       <div>
          <label class="form__label">{{ $t('return-Date') }}</label>
          <div class="row">
-            <div class="col-6">
-               <div class="date__picker-innner">
-                  <span class="date__picker-innner-icon">
-                     <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 9H4V11H6V9ZM10 9H8V11H10V9ZM14 9H12V11H14V9ZM16 2H15V0H13V2H5V0H3V2H2C0.89 2 0.00999999 2.9 0.00999999 4L0 18C0 19.1 0.89 20 2 20H16C17.1 20 18 19.1 18 18V4C18 2.9 17.1 2 16 2ZM16 18H2V7H16V18Z" />
-                     </svg>
-                  </span>
-                  <Datepicker v-model="requestForm.dropDate" required input-class="datepicker-input" format="dd/MM/yyyy" :placeholder="$t('return-Date')" :language="langLocale" @selected="highlightTo" />
-               </div>
+            <div class="col-6 date-column">
+               <DateRangePicker :date-range="dateRange" opens="right" :auto-apply="true" :ranges="false">
+                  <template #input>
+                     {{ $moment(dateRange.endDate).format('MMM DD') }}
+                  </template>
+               </DateRangePicker>
+
             </div>
             <div class="col-6">
-               <b-select v-model="requestForm.dropTime" :placeholder="$t('time')" :options="[
-              '8:30',
-              '9:00',
-              '9:30',
-              '10:00',
-              '10:30',
-              '11:00',
-              '11:30',
-              '12:00',
-              '12:30',
-              '13:00',
-              '13:30',
-              '14:00',
-              '14:30',
-              '15:00',
-              '15:30',
-              '16:00',
-              '16:30',
-              '17:00',
-              '17:30',
-              '18:00',
-              '18:30',
-            ]" outline />
+               <b-select v-model="requestForm.dropTime" :placeholder="$t('time')" :options="timeOptions" outline />
             </div>
          </div>
       </div>
@@ -134,18 +86,17 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
-import { en, de } from 'vuejs-datepicker/dist/locale'
+import DateRangePicker from 'vue2-daterange-picker'
 import ModalBooking from '../../modals/ModalBooking.vue'
 import ModelConfirm from '../../modals/ModelConfirm.vue'
+//you need to import the CSS manually
+import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 
 export default {
    namd: 'SearchCarForm',
-   components: { Datepicker, ModalBooking, ModelConfirm, },
+   components: { ModalBooking, ModelConfirm, DateRangePicker },
    data() {
       return {
-         en,
-         de,
          isShowBookingFrom: false,
          isSubmitedBookingForm: false,
          error: false,
@@ -169,6 +120,10 @@ export default {
          },
          vehicleClasses: [],
          locations: [],
+         dateRange: {
+            startDate: new Date(),
+            endDate: new Date()
+         }
       }
    },
    computed: {
@@ -178,6 +133,31 @@ export default {
          }
          return this.en
       },
+      timeOptions() {
+         return [
+            '8:30',
+            '9:00',
+            '9:30',
+            '10:00',
+            '10:30',
+            '11:00',
+            '11:30',
+            '12:00',
+            '12:30',
+            '13:00',
+            '13:30',
+            '14:00',
+            '14:30',
+            '15:00',
+            '15:30',
+            '16:00',
+            '16:30',
+            '17:00',
+            '17:30',
+            '18:00',
+            '18:30',
+         ]
+      }
    },
    watch: {
       'requestForm.dropDate'(dropDate) {
@@ -251,6 +231,103 @@ export default {
    },
 }
 </script>
+
+<style lang="scss">
+.date-column {
+   .vue-daterange-picker {
+      width: 100%;
+      .reportrange-text {
+         width: 100%;
+      }
+
+      .drp-calendar.col.left {
+         .next.available {
+            visibility: hidden;
+         }
+      }
+      .drp-calendar.col.right {
+         .prev.available {
+            visibility: hidden;
+         }
+      }
+
+      .calendar-table {
+         table {
+            thead {
+               height: 50px;
+               th.month {
+                  font-size: 20px;
+               }
+            }
+            tbody {
+               th,
+               td {
+                  font-size: 16px;
+                  padding: 10px 15px;
+                  position: relative;
+                  &.in-range {
+                     background-color: $primary-color;
+                     border-color: $primary-color;
+                     color: #fff;
+                  }
+
+                  &.start-date::before {
+                     content: '';
+                     border-left: 0.625rem solid #191919;
+                     border-top: 0.625rem solid transparent;
+                     border-bottom: 0.625rem solid transparent;
+                     pointer-events: none;
+                     position: absolute;
+                     top: 50%;
+                     transform: translateY(-50%);
+                     left: -1px;
+                     z-index: 1;
+                  }
+                  &.end-date::before {
+                     content: '';
+                     border-right: 0.625rem solid #191919;
+                     border-top: 0.625rem solid transparent;
+                     border-bottom: 0.625rem solid transparent;
+                     pointer-events: none;
+                     position: absolute;
+                     top: 50%;
+                     transform: translateY(-50%);
+                     right: -1px;
+                     z-index: 1;
+                  }
+               }
+            }
+         }
+      }
+
+      .daterangepicker {
+         padding: 20px 20px 30px;
+
+         .drp-calendar {
+            max-width: unset !important;
+            width: auto;
+         }
+
+         .calendars-container {
+            width: 100%;
+            justify-content: center;
+         }
+
+         // Responsive
+         @media screen and (min-width: 1024px) {
+            min-width: 900px;
+         }
+      }
+
+      .daterangepicker td.active,
+      .daterangepicker td.active:hover {
+         background-color: $primary-color;
+         border-color: $primary-color;
+         border-radius: 0;
+      }
+   }
+}
+</style>
 
 <style lang="scss" scoped>
 .search-box {
