@@ -266,12 +266,16 @@ export default {
 
       .drp-calendar.col.left {
          .next.available {
-            visibility: hidden;
+            @media (min-width: 540px) {
+               visibility: hidden;
+            }
          }
       }
       .drp-calendar.col.right {
          .prev.available {
-            visibility: hidden;
+            @media (min-width: 540px) {
+               visibility: hidden;
+            }
          }
       }
 
@@ -286,8 +290,6 @@ export default {
             tbody {
                th,
                td {
-                  font-size: 16px;
-                  padding: 10px 15px;
                   position: relative;
                   &.in-range {
                      background-color: $primary-color;
@@ -304,8 +306,15 @@ export default {
                      position: absolute;
                      top: 50%;
                      transform: translateY(-50%);
-                     left: -1px;
+                     left: 0px;
                      z-index: 1;
+
+                     @media (max-width: 992px) {
+                        border-width: 0.5rem;
+                     }
+                     @media (max-width: 768px) {
+                        border-width: 0.4rem;
+                     }
                   }
                   &.end-date::before {
                      content: '';
@@ -318,6 +327,22 @@ export default {
                      transform: translateY(-50%);
                      right: -1px;
                      z-index: 1;
+
+                     @media (max-width: 992px) {
+                        border-width: 0.5rem;
+                     }
+                     @media (max-width: 768px) {
+                        border-width: 0.4rem;
+                     }
+                  }
+
+                  @media (min-width: 1024px) {
+                     font-size: 16px;
+                     padding: 10px 15px;
+                  }
+                  @media (min-width: 768px) {
+                     font-size: 15px;
+                     padding: 7px 10px;
                   }
                }
             }
@@ -335,6 +360,11 @@ export default {
          .calendars-container {
             width: 100%;
             justify-content: center;
+         }
+
+         &:after,
+         &:before {
+            visibility: hidden;
          }
 
          // Responsive
